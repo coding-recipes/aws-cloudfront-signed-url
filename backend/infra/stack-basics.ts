@@ -2,9 +2,18 @@ import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as kms from 'aws-cdk-lib/aws-kms';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
 import { ClfrSignedUrlStack } from './stack';
 
 export class Basics {
+
+  public static createParamStoreParameter(stack: ClfrSignedUrlStack) {
+    const parameter = new ssm.StringParameter(stack, 'parameter', {
+      parameterName: 'CLF_PRIVATE_KEY',
+      stringValue: stack.private_key,
+    });
+    stack.pk_parameter = parameter;
+  }
 
   public static createKMSkeyForBucket(stack: ClfrSignedUrlStack) {
     const key = new kms.Key(stack, 'key', {

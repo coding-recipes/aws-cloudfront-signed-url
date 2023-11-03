@@ -10,6 +10,9 @@ import { ClfrSignedUrlStack } from './stack';
 export const stackName = process.env.STACK_NAME || 'ClfrSignedUrlStack';
 
 const stackEnv = {
+  CERTIFICATE_ARN: process.env.CERTIFICATE_ARN || '',
+  CUSTOM_DOMAIN: process.env.CUSTOM_DOMAIN || '',
+  // -- CONFIG --
   S3_IMAGE_FOLDER: "images",
 }
 

@@ -1,8 +1,14 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { CloudFront } from './stack-cloudfront';
 import { Basics } from './stack-basics';
+import * as fs from 'fs';
 
 export interface ClfrSignedUrlStackProps extends cdk.StackProps {
+  // -- inputs --
+  CERTIFICATE_ARN?: string,
+  CUSTOM_DOMAIN?: string,
+  // -- config
   S3_IMAGE_FOLDER: string,
 }
 
@@ -27,12 +33,21 @@ export class ClfrSignedUrlStack extends cdk.Stack {
     super(scope, id, props);
     this.props = props;
 
+    this.private_key = fs.readFileSync('./keys/private_key.pem', 'utf8');
+    this.public_key = fs.readFileSync('./keys/public_key.pem', 'utf8');
+
     Basics.createKMSkeyForBucket(this);
     Basics.createBucketWithKMS(this);
     Basics.createBucketDeployment(this);
     Basics.createUserPool(this);
     Basics.createParamStoreParameter(this);
 
+    CloudFront.setKeyGroup(this);
+    CloudFront.createDistribution(this);
+    CloudFront.setOAC(this);
+    CloudFront.setBucketPolicyForOAC(this);
+
+    CloudFront.setKMSkeyAccessForCloudFront(this);
   }
 
 }
