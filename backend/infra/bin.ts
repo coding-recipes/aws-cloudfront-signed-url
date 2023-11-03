@@ -5,12 +5,13 @@ config({ path: `.env.${ENVIRONMENT}` });
 
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
+import { ClfrSignedUrlStack } from './stack';
 
 export const stackName = process.env.STACK_NAME || 'ClfrSignedUrlStack';
 
+const stackEnv = {
+  S3_IMAGE_FOLDER: "images",
+}
 
 const app = new cdk.App();
-const stack = new cdk.Stack(app, stackName, {});
-
-app.synth();
-
+new ClfrSignedUrlStack(app, stackName, stackEnv);
