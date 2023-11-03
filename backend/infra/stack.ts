@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { API } from './stack-api';
 import { CloudFront } from './stack-cloudfront';
 import { Basics } from './stack-basics';
 import * as fs from 'fs';
@@ -9,6 +10,7 @@ export interface ClfrSignedUrlStackProps extends cdk.StackProps {
   CERTIFICATE_ARN?: string,
   CUSTOM_DOMAIN?: string,
   // -- config
+  RESTRICT_API: boolean,
   S3_IMAGE_FOLDER: string,
 }
 
@@ -48,6 +50,18 @@ export class ClfrSignedUrlStack extends cdk.Stack {
     CloudFront.setBucketPolicyForOAC(this);
 
     CloudFront.setKMSkeyAccessForCloudFront(this);
+
+    API.createExecutionRole(this);
+    API.createLambdaGraphApi(this);
+    API.createLambdaRestApi(this);
+    API.addBucketPermissions(this);
+    API.addParamStorePermissions(this);
+
+    API.createRestApi(this);
+    API.createRestApiProxyEndpoint(this, this.fxRestApi, this.props.RESTRICT_API);
+
+    API.createGraphqlApi(this, this.props.RESTRICT_API);
+    API.addResolvers(this);
   }
 
 }

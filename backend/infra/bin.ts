@@ -13,6 +13,7 @@ const stackEnv = {
   CERTIFICATE_ARN: process.env.CERTIFICATE_ARN || '',
   CUSTOM_DOMAIN: process.env.CUSTOM_DOMAIN || '',
   // -- CONFIG --
+  RESTRICT_API: false,
   S3_IMAGE_FOLDER: "images",
 }
 
