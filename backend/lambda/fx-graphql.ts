@@ -1,13 +1,9 @@
 import { AppSyncResolverEvent, AppSyncResolverHandler, Context, Callback } from 'aws-lambda'
+import { getFiles, getUrl, getPrivateKey } from './utils'
 
-/**
- *        NOT IMPLEMENTED   
- */
+let PRIVATE_KEY: string
+
 export const handler: AppSyncResolverHandler<any, any, any> = async (event: AppSyncResolverEvent<any, any>, context: Context, callback: Callback) => {
-  console.log(event.info.fieldName, '---', event.arguments)
-  console.log('user', (event.identity as any))
-  const user = (event.identity as any).sub
-
   const resolve = (data: any) => {
     callback(null, data)
   }
@@ -15,11 +11,20 @@ export const handler: AppSyncResolverHandler<any, any, any> = async (event: AppS
     callback(error)
   }
 
-  //  NOT IMPLEMENTED   
   const args = event.arguments;
   switch (event.info.fieldName) {
-    case 'getFiles': resolve({ ok: 1, query: "getFiles" }); break;
-    case 'getUrl': resolve({ ok: 1, query: "getUrl" }); break;
+    case 'getFiles':
+      const files = await getFiles()
+      resolve(files);
+      break;
+    case 'getUrl':
+      const { file } = args as { file: string };
+      if (!PRIVATE_KEY) {
+        PRIVATE_KEY = await getPrivateKey()
+      }
+      var url = await getUrl(file, PRIVATE_KEY);
+      resolve(url);
+      break;
     default: reject('unknown query'); break;
   }
 }

@@ -18,7 +18,6 @@ const replaceStringPrefix = (str: string, prefix: string, replacement: string = 
 }
 
 export const getFiles = async () => {
-  // TODO: replace temporary S3 listObjects with DynamoDB query
   const prefix = BUCKET_BASE_FOLDER + "/"
   const command = new ListObjectsCommand({ Bucket: BUCKET_NAME, Prefix: prefix });
   const response: ListObjectsCommandOutput = await s3.send(command);

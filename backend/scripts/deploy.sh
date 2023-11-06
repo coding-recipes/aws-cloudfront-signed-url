@@ -20,4 +20,4 @@ fi
 echo "stack name: $STACK_NAME"
 echo "profile: $PROFILE"
 
-ENVIRONMENT=$1 cdk deploy -O exports.json --profile=$PROFILE --require-approval never
+ENVIRONMENT=$1 cdk deploy -O exports_$1.json --profile=$PROFILE --require-approval never

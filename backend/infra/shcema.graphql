@@ -1,8 +1,4 @@
-type File{
-  file: String!
-}
-
 type Query {
-  getFiles: [File]
+  getFiles: [String]
   getUrl(file: String!): String
 }
