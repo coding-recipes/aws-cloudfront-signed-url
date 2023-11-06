@@ -79,7 +79,6 @@ export class API {
       }
     });
 
-    new cdk.CfnOutput(stack, 'restApiUrl', { value: api.url });
     stack.restApi = api;
   }
 
@@ -117,7 +116,6 @@ export class API {
       authorizationConfig
     });
 
-    new cdk.CfnOutput(stack, 'graphQlApiUrl', { value: api.graphqlUrl });
     stack.graphqlApi = api;
   }
 

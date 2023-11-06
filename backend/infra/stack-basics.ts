@@ -80,10 +80,8 @@ export class Basics {
       }
     });
 
-    new cdk.CfnOutput(stack, 'userPoolId', { value: userPool.userPoolId });
-    new cdk.CfnOutput(stack, 'userPoolClientId', { value: userPoolClient.userPoolClientId });
-
     stack.userPool = userPool;
+    stack.userPoolClient = userPoolClient;
   }
 
 }

@@ -22,6 +22,7 @@ export class ClfrSignedUrlStack extends cdk.Stack {
   public restApi: cdk.aws_apigateway.RestApi;
   public executionRole: cdk.aws_iam.Role;
   public userPool: cdk.aws_cognito.UserPool;
+  public userPoolClient: cdk.aws_cognito.UserPoolClient;
   public graphqlApi: cdk.aws_appsync.GraphqlApi;
   public kmsKey: cdk.aws_kms.Key;
   public distribution: cdk.aws_cloudfront.CloudFrontWebDistribution;
@@ -62,6 +63,13 @@ export class ClfrSignedUrlStack extends cdk.Stack {
 
     API.createGraphqlApi(this, this.props.RESTRICT_API);
     API.addResolvers(this);
+
+    new cdk.CfnOutput(this, 'userPoolId', { value: this.userPool.userPoolId });
+    new cdk.CfnOutput(this, 'userPoolClientId', { value: this.userPoolClient.userPoolClientId });
+    new cdk.CfnOutput(this, 'restApiUrl', { value: this.restApi.url });
+    new cdk.CfnOutput(this, 'graphQlApiUrl', { value: this.graphqlApi.graphqlUrl });
+    new cdk.CfnOutput(this, 'distributionDomainName', { value: this.distribution.distributionDomainName });
+    new cdk.CfnOutput(this, 'distributionId', { value: this.distribution.distributionId });
   }
 
 }

@@ -49,10 +49,6 @@ export class CloudFront {
     };
 
     const distribution = new cloudfront.CloudFrontWebDistribution(stack, 'signed-distribution', distProps)
-
-
-    new cdk.CfnOutput(stack, 'distributionDomainName', { value: distribution.distributionDomainName });
-
     stack.distribution = distribution
     return distribution
   }
