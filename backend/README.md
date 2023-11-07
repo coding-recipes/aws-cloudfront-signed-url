@@ -4,6 +4,9 @@ Simple implementation of CloudFront Signed URL-s with AWS CDK (Cloud Development
 The deployment process uploads some sample images to the origin S3 bucket.  
 The REST API and the GraphQl API support two queries. One for listing the files, and another to request a CloudFront Signed URL for a specific file.
 
+**What is a CloudFront signed URL-s for?**  
+CloudFront signed URLs are a security feature provided by Amazon Web Services (AWS) for their Content Delivery Network (CDN) service, Amazon CloudFront. They are used to restrict access to private or sensitive content distributed through CloudFront by generating time-limited, authenticated URLs. This ensures that only authorized users can access the content, preventing unauthorized access or hotlinking. To create a signed URL, a server generates a cryptographically signed token with specific access permissions and a limited time validity, which is then appended to the resource URL. When a user or client requests this signed URL, CloudFront's edge servers verify the token's authenticity and permissions, allowing or denying access accordingly. This mechanism is essential for protecting content such as premium video streams, software downloads, or confidential documents served through CloudFront.
+
 **AWS Infrastructure**
 - S3: Bucket for storing static assets (image files)
 - KMS: custom key to protect Bucket assets (necessary for CloudFront OAC)
@@ -16,7 +19,7 @@ The REST API and the GraphQl API support two queries. One for listing the files,
 - SSM Parameter Store: stores private key (.pem) for signing
 - API Gateway and Lambda function: REST API
 - AppSync and Lambda function: GraphQL API
-- Cognito User Pool: authentication and authorization (INACTIVE)
+- Cognito User Pool: authentication and authorization (On/Off configurable)
 
 **IaC - Infrastructure as Code**  
 The stack is built and deployed via AWS CDK (Cloud Development Kit)
