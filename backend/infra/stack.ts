@@ -59,13 +59,13 @@ export class ClfrSignedUrlStack extends cdk.Stack {
     API.addParamStorePermissions(this);
 
     API.createRestApi(this);
-    API.createRestApiProxyEndpoint(this, this.fxRestApi, this.props.RESTRICT_API);
+    API.createRestApiProxyEndpoint(this, this.fxRestApi);
 
-    API.createGraphqlApi(this, this.props.RESTRICT_API);
+    API.createGraphqlApi(this);
     API.addResolvers(this);
 
-    new cdk.CfnOutput(this, 'userPoolId', { value: this.userPool.userPoolId });
-    new cdk.CfnOutput(this, 'userPoolClientId', { value: this.userPoolClient.userPoolClientId });
+    new cdk.CfnOutput(this, 'userPoolId', { value: this.userPool?.userPoolId || '' });
+    new cdk.CfnOutput(this, 'userPoolClientId', { value: this.userPoolClient?.userPoolClientId || '' });
     new cdk.CfnOutput(this, 'restApiUrl', { value: this.restApi.url });
     new cdk.CfnOutput(this, 'graphQlApiUrl', { value: this.graphqlApi.graphqlUrl });
     new cdk.CfnOutput(this, 'distributionDomainName', { value: this.distribution.distributionDomainName });

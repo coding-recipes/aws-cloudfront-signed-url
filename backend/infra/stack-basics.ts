@@ -3,6 +3,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as kms from 'aws-cdk-lib/aws-kms';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
+import * as cg from 'aws-cdk-lib/aws-cognito';
 import { ClfrSignedUrlStack } from './stack';
 
 export class Basics {
@@ -45,21 +46,18 @@ export class Basics {
   }
 
   public static createUserPool(stack: ClfrSignedUrlStack) {
-    const userPool = new cdk.aws_cognito.UserPool(stack, 'signed-user-pool', {
-      userPoolName: 'signed-user-pool',
+    if (!stack.props.RESTRICT_API) {
+      return;
+    }
+
+    const userPool = new cg.UserPool(stack, 'signed-user-pool', {
+      userPoolName: stack.stackName + "-user-pool",
       selfSignUpEnabled: true,
       signInAliases: {
-        email: true,
+        username: true,
       },
-      autoVerify: {
-        email: true,
-      },
-      standardAttributes: {
-        email: {
-          required: true,
-          mutable: true,
-        },
-      },
+      autoVerify: {},
+      standardAttributes: {},
       passwordPolicy: {
         minLength: 6,
         requireLowercase: false,

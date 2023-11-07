@@ -82,7 +82,8 @@ export class API {
     stack.restApi = api;
   }
 
-  public static createRestApiProxyEndpoint(stack: ClfrSignedUrlStack, fx: lambda.Function, withAuthorizer: boolean) {
+  public static createRestApiProxyEndpoint(stack: ClfrSignedUrlStack, fx: lambda.Function) {
+    const withAuthorizer = stack.props.RESTRICT_API;
     const createAuthorizer = () => {
       return new rest.CognitoUserPoolsAuthorizer(stack, 'UserAuthorizer', {
         cognitoUserPools: [stack.userPool]
@@ -100,7 +101,8 @@ export class API {
   }
 
 
-  public static createGraphqlApi(stack: ClfrSignedUrlStack, withAuthorizer: boolean) {
+  public static createGraphqlApi(stack: ClfrSignedUrlStack) {
+    const withAuthorizer = stack.props.RESTRICT_API;
     const authorizationConfig = withAuthorizer ? {
       defaultAuthorization: {
         authorizationType: appsync.AuthorizationType.USER_POOL,
