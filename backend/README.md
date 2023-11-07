@@ -11,12 +11,12 @@ The REST API and the GraphQl API support two queries. One for listing the files,
   - CDN: distributes/caches static assets from S3 origin
   - protection: permits direct access
   - controlled access: creates ClFr signed URL-s for S3 assets
-- CloudFront key group: stores public key (.pem) for validation
-- CloudFront OAC: save channel between S3 and CloudFront
+- CloudFront Key Group: stores public key (.pem) for validation
+- CloudFront OAC: safe channel between S3 and CloudFront
 - SSM Parameter Store: stores private key (.pem) for signing
 - API Gateway and Lambda function: REST API
 - AppSync and Lambda function: GraphQL API
-- Cognito User Pool: authentication and authorization
+- Cognito User Pool: authentication and authorization (INACTIVE)
 
 **IaC - Infrastructure as Code**  
 The stack is built and deployed via AWS CDK (Cloud Development Kit)
@@ -42,3 +42,6 @@ type Query {
   getUrl(file: String!): String ... request signed URL for a file  
 }
 ```
+
+**Backend Mechanism**  
+![CloudFront Signed URL](/docs/architecture.png "CloudFront Signed URL")
