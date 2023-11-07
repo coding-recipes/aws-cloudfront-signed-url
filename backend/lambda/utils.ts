@@ -18,6 +18,10 @@ const replaceStringPrefix = (str: string, prefix: string, replacement: string = 
 }
 
 export const getFiles = async () => {
+  /**
+   * NOT RECOMMENDED FOR PRODUCTION!
+   * This solution is not scalable, but it's ok for the demo.
+   */
   const prefix = BUCKET_BASE_FOLDER + "/"
   const command = new ListObjectsCommand({ Bucket: BUCKET_NAME, Prefix: prefix });
   const response: ListObjectsCommandOutput = await s3.send(command);

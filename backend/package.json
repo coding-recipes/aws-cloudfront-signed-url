@@ -1,7 +1,7 @@
 {
   "name": "cloudfront-signed-url-be",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.1.0",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

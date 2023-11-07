@@ -1,8 +1,9 @@
 ### CloudFront Signed URL Demo - Backend
 
-Simple implementation of CloudFront Signed URL-s with AWS CDK (Cloud Development Kit).  
-The deployment process uploads some sample images to the origin S3 bucket.  
-The REST API and the GraphQl API support two queries. One for listing the files, and another to request a CloudFront Signed URL for a specific file.
+Simple implementation of CloudFront Signed URL-s.  
+The repo contains the Backend API and AWS infrastructure in the `/backend` folder. Infrastructure elements are created and deployed using AWS CDK (Cloud Development Kit).  
+The demo UI can be found in the `/frontend` folder.  
+For installation and deployment guidelines, please read `README` files in these folders.
 
 **AWS Infrastructure**
 - S3: Bucket for storing static assets (image files)
@@ -20,14 +21,6 @@ The REST API and the GraphQl API support two queries. One for listing the files,
 
 **IaC - Infrastructure as Code**  
 The stack is built and deployed via AWS CDK (Cloud Development Kit)
-
-**Folders**  
-`/infra`: AWS CDK Code for AWS infrastructure  
-`/lambda`: code for Lambda functions
-
-**Commands**  
-run `yarn` or `yarn install` to install dependencies  
-run `yarn dev` to launch UI using `.env.dev`
 
 **REST API endpoints**  
 ```
