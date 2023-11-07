@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import './App.css'
 const REST_API_URL = import.meta.env.VITE_REST_API_URL;
+const REPO_URL = import.meta.env.VITE_REPO_URL;
 
 function Panel({ children }: { children: React.ReactNode }) {
   return <div className='panel'>
@@ -74,22 +75,26 @@ function App() {
   return (
     <>
       <div className='page'>
-        <Panel>
-          <Row><h3>File List</h3></Row>
-          <Row>
-            <div className='filelist'>
-              {files.map((file) => <ListElement key={file} {...{ file, selectFile, currFile }} />)}
-            </div>
-          </Row>
-        </Panel >
+        <div className='page_content'>
+          <Panel>
+            <Row><h3>File List</h3></Row>
+            <Row>
+              <div className='filelist'>
+                {files.map((file) => <ListElement key={file} {...{ file, selectFile, currFile }} />)}
+              </div>
+            </Row>
+          </Panel >
 
-        <Panel>
-          <div className='fileview'>
-            <div className='title'>{currFile}</div>
-            <ImagePreview url={currUrl} />
-            <ImageLink url={currUrl} />
-          </div>
-        </Panel >
+          <Panel>
+            <div className='fileview'>
+              <div className='title'>{currFile}</div>
+              <ImagePreview url={currUrl} />
+              <ImageLink url={currUrl} />
+            </div>
+          </Panel >
+        </div >
+
+        {REPO_URL && <a className='repo-link' href={REPO_URL} target="_blank">{REPO_URL}</a>}
 
       </div >
     </>

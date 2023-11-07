@@ -1,2 +1,3 @@
+add ui loading(spinner)
 add pipeline
 add cognito auth
